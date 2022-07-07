@@ -4,21 +4,22 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
-    output: {
-      filename: 'main.js',
-      path: path.resolve(__dirname, 'dist'),
-      clean: true,
-    },
+    entry: './src/index.ts',
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader'
                 }
-            }, {
+            },
+            {
                 test: /\.s[ac]ss$/i,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -27,6 +28,9 @@ module.exports = {
                 ]
             },
         ],
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -40,5 +44,11 @@ module.exports = {
             filename: "[name].css",
         }),
     ],
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        clean: true,
+      },
     devtool: 'source-map',
+
   };
