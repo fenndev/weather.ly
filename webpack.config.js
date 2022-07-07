@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 module.exports = {
@@ -9,15 +10,6 @@ module.exports = {
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: "weather.ly",
-            meta: {viewport: 'width=device-width, initial-scale=1.0'},
-            scriptLoading: 'defer',
-            filename: "index.html",
-            template: './src/index.html',
-        }),
-    ],
     module: {
         rules: [
             {
@@ -26,12 +18,27 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
-            },
-            {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+            }, {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    "sass-loader",
+                ]
             },
         ],
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: "weather.ly",
+            meta: {viewport: 'width=device-width, initial-scale=1.0'},
+            scriptLoading: 'defer',
+            filename: "index.html",
+            template: './src/index.html',
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        }),
+    ],
     devtool: 'source-map',
   };
