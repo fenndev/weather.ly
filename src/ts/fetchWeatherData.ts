@@ -1,4 +1,6 @@
-export async function fetchWeatherData(request: any, units: string = 'imperial') {
+    const key: string = '53eb90610b23be70589bc3e845c27b5a';
+    
+    export async function fetchWeatherData(request: any, units: string = 'imperial') {
     try {
         const response = await (await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${request.cityName}&limit=1&appid=${request.key}`)).json();
         const data = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${response[0].lat}&lon=${response[0].lon}&units=${units}&appid=${request.key}`)).json();
@@ -6,6 +8,42 @@ export async function fetchWeatherData(request: any, units: string = 'imperial')
     }
     catch(error) {
         console.log(error);
+    }
+}
+
+export async function queryLocation(location: string) {
+    try {
+        const response = await (await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${key}`)).json();
+        let cityArray: City[] = [];
+        console.log(response);
+        for(const result in response) {
+            let currentCity = response[result];
+            if(currentCity.country != 'US')
+                console.log(`${currentCity.name}, ${currentCity.country}`);
+            else
+                console.log(`${currentCity.name}, ${currentCity.state}, ${currentCity.country}`);
+        }
+    }
+    
+    catch(error) {
+        console.log(error);
+    }
+
+}
+
+class City {
+    cityName: string;
+    stateName: string;
+    countryName: string;
+    lat: number;
+    lon: number;
+
+    constructor(cityName: string, stateName: string, countryName: string, lat: number, lon: number) {
+        this.cityName = cityName;
+        this.stateName = stateName;
+        this.countryName = countryName;
+        this.lat = lat;
+        this.lon = lon;
     }
 }
 
