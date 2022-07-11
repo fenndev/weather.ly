@@ -12,22 +12,6 @@
     }
 }
 
-class City {
-    cityName: string;
-    stateName: string;
-    countryName: string;
-    lat: number;
-    lon: number;
-
-    constructor(cityName: string, stateName: string, countryName: string, lat: number, lon: number) {
-        this.cityName = cityName;
-        this.stateName = stateName;
-        this.countryName = countryName;
-        this.lat = lat;
-        this.lon = lon;
-    }
-}
-
 class WeatherData {
         cityName: string;
         stateName: string;
