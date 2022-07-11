@@ -1,8 +1,10 @@
 import '../style.scss';
-import {fetchWeatherData} from './fetchWeatherData';
+import {fetchWeatherData, WeatherData} from './fetchWeatherData';
+import getFullCountryName from './getFullCountryName';
 
 async function main() {
-    console.log(await fetchWeatherData('berlin'));
+    let weatherData = await fetchWeatherData('berlin');
+    console.log(getFullCountryName(weatherData.countryName.toUpperCase()));
 }
 
 main();

@@ -12,7 +12,7 @@
     }
 }
 
-class WeatherData {
+export class WeatherData {
         cityName: string;
         stateName: string;
         countryName: string;
