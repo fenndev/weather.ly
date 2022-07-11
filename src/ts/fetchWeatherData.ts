@@ -1,10 +1,11 @@
     const key: string = '53eb90610b23be70589bc3e845c27b5a';
     
-    export async function fetchWeatherData(request: any, units: string = 'imperial') {
+    export async function fetchWeatherData(cityName: string, units: string = 'metric') {
     try {
-        const response = await (await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${request.cityName}&limit=1&appid=${request.key}`)).json();
-        const data = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${response[0].lat}&lon=${response[0].lon}&units=${units}&appid=${request.key}`)).json();
-        return new WeatherData(data.name, Number.parseFloat((data.main.temp).toFixed(1)), data.weather[0].description, Number.parseFloat((data.wind.speed).toFixed(1)), data.main.humidity, units);
+        const response = await (await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${key}`)).json();
+        let cityInfo = response[0];
+        const data = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${cityInfo.lat}&lon=${cityInfo.lon}&units=${units}&appid=${key}`)).json();
+        return new WeatherData(cityInfo.name.toLowerCase(), cityInfo.state.toLowerCase(), cityInfo.country.toLowerCase(), Number.parseFloat((data.main.temp).toFixed(1)), data.weather[0].description, Number.parseFloat((data.wind.speed).toFixed(1)), data.main.humidity, units);
     }
     catch(error) {
         console.log(error);
@@ -49,6 +50,8 @@ class City {
 
 class WeatherData {
         cityName: string;
+        stateName: string;
+        countryName: string;
         temperature: number;
         weatherDescription: string;
         windSpeed: number;
@@ -56,6 +59,8 @@ class WeatherData {
         units: string;
     constructor(
         cityName: string,
+        stateName: string,
+        countryName: string,
         temperature: number,
         weatherDescription: string,
         windSpeed: number,
@@ -63,6 +68,9 @@ class WeatherData {
         units: string,
     ) {
         this.cityName = cityName;
+        if(stateName != cityName)
+            this.stateName = stateName;
+        this.countryName = countryName;
         this.temperature = temperature;
         this.weatherDescription = weatherDescription;
         this.windSpeed = windSpeed;

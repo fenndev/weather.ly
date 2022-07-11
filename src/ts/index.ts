@@ -3,7 +3,7 @@ import {fetchWeatherData, queryLocation} from './fetchWeatherData';
 import Request from './request';
 
 async function main() {
-    queryLocation('berlin');
+    console.log(await fetchWeatherData('berlin'));
 }
 
 main();
