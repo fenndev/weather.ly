@@ -12,26 +12,6 @@
     }
 }
 
-export async function queryLocation(location: string) {
-    try {
-        const response = await (await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${key}`)).json();
-        let cityArray: City[] = [];
-        console.log(response);
-        for(const result in response) {
-            let currentCity = response[result];
-            if(currentCity.country != 'US')
-                console.log(`${currentCity.name}, ${currentCity.country}`);
-            else
-                console.log(`${currentCity.name}, ${currentCity.state}, ${currentCity.country}`);
-        }
-    }
-    
-    catch(error) {
-        console.log(error);
-    }
-
-}
-
 class City {
     cityName: string;
     stateName: string;
