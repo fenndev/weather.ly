@@ -1,4 +1,4 @@
-import { WeatherData } from "./fetchWeatherData";
+import WeatherData from "./WeatherData";
 
 export default function displayWeatherData(weather: WeatherData) {
     const body = document.querySelector('body');

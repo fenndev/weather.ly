@@ -1,6 +1,7 @@
 import '../sass/style.scss';
-import {fetchWeatherData, WeatherData} from './fetchWeatherData';
-import getFullCountryName from './getFullCountryName';
+import WeatherData from './WeatherData';
+import {fetchWeatherData} from './FetchWeatherData';
+import getFullCountryName from './GetFullCountryName';
 
 async function main() {
     let weatherData = await fetchWeatherData('berlin');
