@@ -3,7 +3,8 @@ export default class WeatherData {
     stateName: string;
     countryName: string;
     temperature: number;
-    weatherDescription: string;
+    weatherType: string;
+    weatherId: number;
     windSpeed: number;
     humidity: number;
     units: string;
@@ -12,7 +13,8 @@ export default class WeatherData {
         stateName: string,
         countryName: string,
         temperature: number,
-        weatherDescription: string,
+        weatherType: string,
+        weatherId: number,
         windSpeed: number,
         humidity: number,
         units: string,
@@ -22,7 +24,8 @@ export default class WeatherData {
         this.stateName = stateName;
     this.countryName = countryName;
     this.temperature = temperature;
-    this.weatherDescription = weatherDescription;
+    this.weatherType = weatherType;
+    this.weatherId = weatherId;
     this.windSpeed = windSpeed;
     this.humidity = humidity;
     this.units = units;
