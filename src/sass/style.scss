@@ -1,7 +1,4 @@
-/* Variables */
-$text-white: #fff;
-$text-black: #000;
-$text-subdued: #666;
+@use 'abstracts';
 
 html, body {
     margin: 0;
@@ -15,10 +12,10 @@ html, body {
 body {
     height: 100vh;
     padding: 40px 80px;
-    background-image: url(../static/chris-barbalis-ZS7HDAtePrQ-unsplash.jpg);
+    background-image: url(../../static/chris-barbalis-ZS7HDAtePrQ-unsplash.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    color: $text-white;
+    color: abstracts.$text-white;
 }
 
 .container {
@@ -45,7 +42,7 @@ body {
     button {
         background: none;
         border: none;
-        color: $text-white;
+        color: abstracts.$text-white;
         font-size: 1.5rem;
         cursor: pointer;
     }
@@ -83,29 +80,29 @@ main {
     &__btn {
         background: none;
         border: none;
-        color: $text-white;
+        color: abstracts.$text-white;
         cursor: pointer;
         font-weight: bold;
         font-size: 1.2rem;
     }
 
     &__text {
-        border: 2px rgba($text-white, 50%) solid;
+        border: 2px rgba(abstracts.$text-white, 50%) solid;
         border-radius: 5px;
         background-color: transparent;
         min-width: 50%;
         padding: 0.6rem;
         padding-left: 0.8rem;
-        color: $text-white;
+        color: abstracts.$text-white;
         font-size: 1.2rem;
 
         &::placeholder {
-            color: $text-subdued;
+            color: abstracts.$text-subdued;
         }
 
         &:focus {
             outline: none;
-            border: 2px rgba($text-white, 100%) solid;
+            border: 2px rgba(abstracts.$text-white, 100%) solid;
         }
     }
 }

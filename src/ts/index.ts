@@ -1,4 +1,4 @@
-import '../style.scss';
+import '../sass/style.scss';
 import {fetchWeatherData, WeatherData} from './fetchWeatherData';
 import getFullCountryName from './getFullCountryName';
 
