@@ -12,6 +12,23 @@ export default function displayWeatherData(weather: WeatherData) {
     const humidity = document.querySelector('.humidity');
     const imperialButton = document.querySelector('.imperial-button');
     const metricButton = document.querySelector('.metric-button');
+    let buttonSelected = false;
+
+    imperialButton.addEventListener('click', () => {
+        if (!buttonSelected) {
+            buttonSelected = true;
+            imperialButton.classList.add('selected');
+            metricButton.classList.remove('selected');
+            convertUnits();
+        }
+        else {
+            buttonSelected = true;
+            metricButton.classList.add('selected');
+            imperialButton.classList.remove('selected');
+            convertUnits();
+        }
+
+    });
 
     if(weather.stateName != undefined)
         cityInfo.textContent = `${weather.cityName}, ${weather.stateName}, ${weather.countryName}`;
@@ -23,15 +40,18 @@ export default function displayWeatherData(weather: WeatherData) {
 
     weatherDescription.textContent = weather.weatherDescription.toUpperCase();
 
-    if(weather.units === 'imperial') {
-        temperature.textContent = `${weather.temperature}°F`;
-        windSpeed.textContent = `${weather.windSpeed} mph`;
-        humidity.textContent = `${weather.humidity}%`;
-    }
-    else
-    {
-        temperature.textContent = `${weather.temperature}°C`;
-        windSpeed.textContent = `${weather.windSpeed} km/h`;
-        humidity.textContent = `${weather.humidity}%`;
+    function convertUnits() {
+        if(weather.units === 'imperial') {
+            temperature.textContent = `${weather.temperature}°F`;
+            windSpeed.textContent = `${weather.windSpeed} mph`;
+            humidity.textContent = `${weather.humidity}%`;
+        }
+        else
+        {
+            temperature.textContent = `${weather.temperature}°C`;
+            windSpeed.textContent = `${weather.windSpeed} km/h`;
+            humidity.textContent = `${weather.humidity}%`;
+        }
     }
 }
+
