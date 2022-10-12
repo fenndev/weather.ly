@@ -38,7 +38,7 @@ module.exports = {
             meta: {viewport: 'width=device-width, initial-scale=1.0'},
             scriptLoading: 'defer',
             filename: "index.html",
-            template: './src/index.html',
+            template: './src/template.html',
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
