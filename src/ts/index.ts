@@ -7,7 +7,7 @@ import UIManager from './classes/UIManager';
 
 async function main() {
     const uiManager = new UIManager();
-    uiManager.initializeSplash();
+    // uiManager.initializeSplash();
     // let weatherData = await fetchWeatherData('berlin');
     // console.log(weatherData);
     // console.log(getFullCountryName(weatherData.countryName.toUpperCase()));

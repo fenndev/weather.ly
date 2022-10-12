@@ -22,16 +22,16 @@ export default class UIManager {
         const homeButton = document.createElement('button');
         const creditsButton = document.createElement('button');
 
+        // Set Classes and Attributes
+        header.classList.add('header');
+        headerLogoContainer.classList.add('header__logo');
+        headerNav.classList.add('header__nav');
+
         // Set Text Content
         headerText.textContent = 'weather.ly';
         headerSubtext.textContent = 'simple and clean weather';
         homeButton.textContent = 'home';
         creditsButton.textContent = 'credits';
-
-        // Set Classes and Attributes
-        header.classList.add('header');
-        headerLogoContainer.classList.add('header__logo');
-        headerNav.classList.add('header__nav');
 
         // Append
         header.appendChild(headerLogoContainer);
@@ -54,6 +54,7 @@ export default class UIManager {
         const searchButton = document.createElement('button');
 
         // Set Classes and Attributes
+        main.classList.add('home');
         searchForm.classList.add('search');
         searchLabel.classList.add('search__label');
         searchInputContainer.classList.add('search__input');
