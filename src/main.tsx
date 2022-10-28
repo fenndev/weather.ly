@@ -1,8 +1,8 @@
 import { render } from 'preact'
 
-const serverURL = `http://weatherly-backend-fenndev.vercel.app`
+const serverURL = `https://weatherly-backend.onrender.com`
 async function queryWeather(data: string) {
-    const requestURL = `${serverURL}/q=${data}`
+    const requestURL = `${serverURL}/${data}`
     const response = await fetch((requestURL), {
         method: 'GET',
         mode: 'cors',
