@@ -1,19 +1,5 @@
-import { render } from 'preact'
-
-const serverURL = `https://weatherly-backend.onrender.com`
-async function queryWeather(data: string) {
-    const requestURL = `${serverURL}/${data}`
-    const response = await fetch((requestURL), {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'text/plain',
-        },
-    })
-    const jsonResponse = await response.json();
-    console.log(jsonResponse);
-    return jsonResponse;
-}
+import { render } from 'preact';
+import queryWeather from './scripts/query-weather';
 
 queryWeather('tacoma,washington')
 
