@@ -1,3 +1,3 @@
 # weather.ly
 
-A simple weather application built with Preact and Vite.
+A simple weather application built with Preact, Tailwind CSS and Vite.
