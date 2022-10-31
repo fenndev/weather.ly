@@ -48,7 +48,7 @@ class Weather extends Component<{}, { dateTime: string, city: string, state: str
 
     render() {
         return (
-            <>
+            <div className="flex flex-col items-center justify-center">
                 <p>{this.state.dateTime}</p>
                 <p>{this.state.city}</p>
                 <p>{this.state.state}</p>
@@ -63,7 +63,7 @@ class Weather extends Component<{}, { dateTime: string, city: string, state: str
                 <p>{this.state.sunrise}</p>
                 <p>{this.state.sunset}</p>
                 <p>{this.state.units}</p>
-            </>
+            </div>
         );
     }
 }
