@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 import queryWeather from '../scripts/query-weather';
 
-class Weather extends Component<{}, { dateTime: string, city: string, state: string | null, country: string, category: string, description: string, temperature: string, windSpeed: string, windDirection: string, humidity: string, pressure: string, sunrise: string, sunset: string, units: string }> {
+class WeatherDisplay extends Component<{}, { dateTime: string, city: string, state: string | null, country: string, category: string, description: string, temperature: string, windSpeed: string, windDirection: string, humidity: string, pressure: string, sunrise: string, sunset: string, units: string }> {
     constructor() {
         super();
 
@@ -68,4 +68,4 @@ class Weather extends Component<{}, { dateTime: string, city: string, state: str
     }
 }
 
-export default Weather;
+export default WeatherDisplay;

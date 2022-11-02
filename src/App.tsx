@@ -1,8 +1,8 @@
-import Weather from "./components/weather";
+import WeatherDisplay from "./components/weather-display";
 
 const App = () => {
     return (
-        <Weather />
+        <WeatherDisplay />
     )
 }
 
