@@ -1,45 +1,35 @@
 export default class WeatherData {
-    cityName: string;
-    stateName: string;
-    countryName: string;
-    temperature: number;
-    weatherType: string;
-    weatherId: number;
-    windSpeed: number;
-    humidity: number;
-    units: string;
     constructor(
-        cityName: string,
-        stateName: string,
-        countryName: string,
-        temperature: number,
-        weatherType: string,
-        weatherId: number,
-        windSpeed: number,
-        humidity: number,
-        units: string,
-    ) {
-    this.cityName = cityName;
-    if(stateName != cityName)
-        this.stateName = stateName;
-    this.countryName = countryName;
-    this.temperature = temperature;
-    this.weatherType = weatherType;
-    this.weatherId = weatherId;
-    this.windSpeed = windSpeed;
-    this.humidity = humidity;
-    this.units = units;
-    }
+        public cityName: string,
+        public stateName: string | null,
+        public countryName: string,
+        public temperature: number,
+        public weatherType: string,
+        public weatherId: number,
+        public windSpeed: number,
+        public humidity: number,
+        public units: string
+    ) {};
+
     public convertUnits() {
-        if (this.units === 'imperial') {
-            this.temperature = Number.parseFloat(((this.temperature - 32) * (5 / 9)).toFixed(1));
-            this.windSpeed = Number.parseFloat((this.windSpeed * 1.609).toFixed(1));
-            this.units = 'metric';
+        try {
+            if (this.units === 'imperial') {
+                this.temperature = Number.parseFloat(((this.temperature - 32) * (5 / 9)).toFixed(1));
+                this.windSpeed = Number.parseFloat((this.windSpeed * 1.609).toFixed(1));
+                this.units = 'metric';
+            }
+            else if (this.units === 'metric') {
+                this.temperature = Number.parseFloat((this.temperature * (9 / 5) + 32).toFixed(1));
+                this.windSpeed = Number.parseFloat((this.windSpeed / 1.609).toFixed(1));
+                this.units = 'imperial';
+            }
+            else {
+                throw new Error(`Error: Unrecognized units. ${this.units} is not a known value.`)
+            }
         }
-        else {
-            this.temperature = Number.parseFloat((this.temperature * (9 / 5) + 32).toFixed(1));
-            this.windSpeed = Number.parseFloat((this.windSpeed / 1.609).toFixed(1));
-            this.units = 'imperial';
+        catch (error) {
+            console.error(error.message)
         }
+        
     }
 };
