@@ -1,6 +1,6 @@
-import WeatherData from "../components/WeatherData";
+import WeatherInstance from "../components/WeatherInstance";
 
-export default function displayWeatherData(weather: WeatherData) {
+export default function displayWeatherData(weather: WeatherInstance) {
     const body = document.querySelector('body');
     const cityInfo = document.querySelector('.city-info');
     const timeDisplay = document.querySelector('.time-display');

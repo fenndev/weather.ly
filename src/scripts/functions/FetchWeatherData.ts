@@ -1,12 +1,24 @@
-import WeatherData from "../components/WeatherData";
+import WeatherInstance from "../components/WeatherInstance";
+
 const key: string = '53eb90610b23be70589bc3e845c27b5a';
-export async function fetchWeatherData(cityName: string, units: string = 'metric') {
+
+export async function fetchWeatherData(cityName: string, units: string = 'metric'): Promise<WeatherInstance> {
     try {
-        const response = await (await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${key}`)).json();
-        let cityInfo = response[0];
-        const data = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${cityInfo.lat}&lon=${cityInfo.lon}&units=${units}&appid=${key}`)).json();
-        console.log(data);
-        return new WeatherData(cityInfo.name.toLowerCase(), cityInfo.state.toLowerCase(), cityInfo.country.toLowerCase(), Number.parseFloat((data.main.temp).toFixed(1)), data.weather[0].main.toLowerCase(), data.weather[0].id, Number.parseFloat((data.wind.speed).toFixed(1)), data.main.humidity, units);
+        const coordinatesResponse = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${key}`);
+        const coordinates: any[] = await coordinatesResponse.json();
+        const city: any = coordinates[0];
+        const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&units=${units}&appid=${key}`);
+        const weather = await weatherResponse.json();
+        return new WeatherInstance(
+            city.name.toLowerCase(),
+            city.state.toLowerCase(),
+            city.country.toLowerCase(),
+            Number.parseFloat((weather.main.temp).toFixed(1)),
+            weather.weather[0].main.toLowerCase(),
+            weather.weather[0].id,
+            Number.parseFloat((weather.wind.speed).toFixed(1)),
+            weather.main.humidity,
+            units);
     }
     catch(error) {
         console.log(error);

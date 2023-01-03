@@ -1,4 +1,4 @@
-export default class WeatherData {
+export default class WeatherInstance {
     constructor(
         public cityName: string,
         public stateName: string | null,
