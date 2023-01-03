@@ -1,8 +1,8 @@
 import WeatherInstance from "../components/WeatherInstance";
 
-const key: string = '53eb90610b23be70589bc3e845c27b5a';
+const key = '53eb90610b23be70589bc3e845c27b5a';
 
-export async function fetchWeatherData(cityName: string, units: string = 'metric'): Promise<WeatherInstance> {
+export async function fetchWeatherData(cityName: string, units = 'metric'): Promise<WeatherInstance> {
     try {
         const coordinatesResponse = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${key}`);
         const coordinates: any[] = await coordinatesResponse.json();

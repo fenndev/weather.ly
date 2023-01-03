@@ -24,7 +24,7 @@ export default class WeatherInstance {
                 this.units = 'imperial';
             }
             else {
-                throw new Error(`Error: Unrecognized units. ${this.units} is not a known value.`)
+                throw new Error(`Error: Unrecognized units. ${this.units} is not a known value.`);
             }
         }
         catch (error) {
