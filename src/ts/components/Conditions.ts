@@ -1,4 +1,4 @@
-export const conditions: any = {
+/* export const conditions: any = {
     rain: {
         img: "../../../static/images/rain.png",
         codes: {
@@ -23,7 +23,7 @@ export const conditions: any = {
             531: "ragged shower rain",
         }
     },
-    rnow: {
+    snow: {
         img: "../../../static/images/snow.png",
         codes: {
             600: "light snow",
@@ -53,7 +53,7 @@ export const conditions: any = {
             804: "overcast clouds",
         }
     },
-    Thunderstorm: {
+    thunderstorm: {
         img: "../../../static/images/thunderstorm.png",
         codes: {
             200: "thunderstorm with light rain",
@@ -84,3 +84,4 @@ export const conditions: any = {
         }
     }
 }
+*/

@@ -1,4 +1,4 @@
-export const countryList: any = {
+/* export const countryList: any = {
     AF: "Afghanistan",
     AX: "Åland Islands",
     AL: "Albania",
@@ -245,3 +245,4 @@ export const countryList: any = {
     ZM: "Zambia",
     ZW: "Zimbabwe",
 }
+*/
