@@ -1,4 +1,3 @@
-// import '../sass/style.scss';
 // import WeatherData from './components/WeatherData';
 // // import { conditions } from './components/Conditions';
 // import {fetchWeatherData} from './functions/FetchWeatherData';
