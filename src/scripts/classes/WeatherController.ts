@@ -6,15 +6,23 @@ export default class WeatherController {
     private view: WeatherView;
     private model: WeatherModel;
 
-    private rateLimitCounter: number = 0;
-    private rateLimitTimestamp: number = Date.now();
-    private rateLimit: number = 10;
-    private rateLimitPeriod: number = 60000; // 1 minute
+    private rateLimit: number;
+    private rateLimitCounter: number;
+    private rateLimitTimestamp: number;
+    private rateLimitPeriod: number;
 
-    constructor(data: string) {
+    constructor() {
+        // Initialize Observers
         this.view = new WeatherView();
         this.model = new WeatherModel();
 
+        // Set declared variables
+        this.rateLimit = 10;
+        this.rateLimitCounter = 0;
+        this.rateLimitTimestamp = Date.now();
+        this.rateLimitPeriod = 60000; // 1 minute
+
+        // Default location
         this.fetchWeatherData('seattle', 'imperial');
     }
 
