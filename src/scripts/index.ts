@@ -1,11 +1,6 @@
-// import WeatherData from './components/WeatherData';
-// // import { conditions } from './components/Conditions';
-// import {fetchWeatherData} from './functions/FetchWeatherData';
-// // import getFullCountryName from './functions/GetFullCountryName';
-// import UIManager from './classes/UIManager';
+import WeatherController from "./classes/WeatherController";
 
-// async function main() {
-
-// }
-
-// main();
+(function main() {
+    const weatherController = new WeatherController();
+    if(weatherController != undefined) console.log("It works!!");
+})();

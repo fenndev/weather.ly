@@ -9,7 +9,7 @@ export default class WeatherData {
         public windSpeed: number,
         public humidity: number,
         public units: string
-    ) {};
+    ) {}
 
     public convertUnits() {
         try {
@@ -27,7 +27,7 @@ export default class WeatherData {
                 throw new Error(`Error: Unrecognized units. ${this.units} is not a known value.`);
             }
         }
-        catch (error) {
+        catch (error: any) {
             console.error(error.message)
         }
         

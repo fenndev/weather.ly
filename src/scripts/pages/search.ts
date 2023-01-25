@@ -5,7 +5,7 @@ export default class SearchPage implements Page {
     pageElement: HTMLElement;
     
     constructor() {
-        this.generatePage();
+        this.pageElement = this.generatePage();
     }
     
     public generatePage(): HTMLElement {
@@ -32,8 +32,6 @@ export default class SearchPage implements Page {
         form.appendChild(label);
         form.appendChild(input);
         form.appendChild(submit);
-
-        this.pageElement = form;
 
         return form;
     }

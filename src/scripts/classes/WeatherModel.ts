@@ -1,8 +1,10 @@
 import WeatherData from "./WeatherData";
 
 export default class WeatherModel {
-    private _currentWeather: WeatherData;
-    constructor() {}
+    private _currentWeather?: WeatherData;
+    constructor() {
+        console.log("Oops~!");
+    }
 
     public parseWeatherData(
         city: string,
@@ -17,7 +19,7 @@ export default class WeatherModel {
         ) {
         this._currentWeather = new WeatherData(
             city.toLowerCase(),
-            state.toLowerCase(),
+            null,
             country.toLowerCase(),
             Number.parseFloat((temperature).toFixed(1)),
             weatherType.toLowerCase(),
@@ -26,16 +28,17 @@ export default class WeatherModel {
             humidity,
             units
         );
+        if(state) this._currentWeather.stateName = state;
     }
 
     // Convert units and return the current weather
     public convertUnits() {
-        this._currentWeather.convertUnits();
+        this._currentWeather?.convertUnits();
         return this.currentWeather;
     }
 
     // Return current weather information
-    public get currentWeather(): WeatherData {
+    public get currentWeather(): WeatherData | undefined {
         return this._currentWeather;
     }
-};
+}
