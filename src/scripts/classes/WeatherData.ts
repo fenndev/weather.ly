@@ -1,11 +1,11 @@
-export default class WeatherInstance {
+export default class WeatherData {
     constructor(
         public cityName: string,
         public stateName: string | null,
         public countryName: string,
         public temperature: number,
         public weatherType: string,
-        public weatherId: number,
+        public weatherID: number,
         public windSpeed: number,
         public humidity: number,
         public units: string
@@ -32,4 +32,4 @@ export default class WeatherInstance {
         }
         
     }
-};
+}
