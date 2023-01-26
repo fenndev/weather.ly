@@ -1,3 +1,4 @@
+import Trie from "./utility/Trie";
 import WeatherModel from "./WeatherModel";
 import WeatherView from "./WeatherView";
 
@@ -5,6 +6,7 @@ export default class WeatherController {
   private key = "53f818d0cdccfe5b5566f280ab1141d5";
   private view: WeatherView;
   private model: WeatherModel;
+  private trie: Trie;
 
   private rateLimit: number;
   private rateLimitCounter: number;
@@ -15,6 +17,9 @@ export default class WeatherController {
     // Initialize Observers
     this.view = new WeatherView();
     this.model = new WeatherModel();
+    
+    // Initialize search Trie
+    this.trie = new Trie();
 
     // Set declared variables
     this.rateLimit = 10;
