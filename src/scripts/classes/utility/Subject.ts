@@ -1,4 +1,4 @@
-import Observer from "./Observer"
+import Observer from "../utility/Observer"
 
 export default class Subject {
     constructor( public observers: Observer[] = [] ) {}

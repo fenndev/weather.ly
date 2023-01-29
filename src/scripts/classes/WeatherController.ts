@@ -1,12 +1,11 @@
-import Trie from "./utility/Trie";
+import Subject from "./utility/Subject";
 import WeatherModel from "./WeatherModel";
 import WeatherView from "./WeatherView";
 
-export default class WeatherController {
+export default class WeatherController extends Subject {
   private key = "53f818d0cdccfe5b5566f280ab1141d5";
   private view: WeatherView;
   private model: WeatherModel;
-  private trie: Trie;
 
   private rateLimit: number;
   private rateLimitCounter: number;
@@ -14,12 +13,11 @@ export default class WeatherController {
   private rateLimitPeriod: number;
 
   constructor() {
+    super();
     // Initialize Observers
     this.view = new WeatherView();
     this.model = new WeatherModel();
-    
-    // Initialize search Trie
-    this.trie = new Trie();
+    this.subscribe(this.view);
 
     // Set declared variables
     this.rateLimit = 10;
@@ -59,7 +57,7 @@ export default class WeatherController {
         units
       );
       if(this.view != undefined) {
-        this.view.update(this.model.currentWeather);
+        this.notify(this.model.currentWeather);
       }
         
     } catch (error) {

@@ -1,25 +1,23 @@
-import Observer from "./Observer";
+import Observer from "./utility/Observer";
 import WeatherData from "./WeatherData";
 
 export default class WeatherView implements Observer {
-    private weatherGUI: HTMLElement | null;
+    private weatherGUI?: HTMLElement;
+    private searchForm?: HTMLFormElement;
+    public searchField?: HTMLInputElement;
 
     constructor() {
-        this.weatherGUI = document.querySelector("#gui");
+        this.createForm();
     }
 
     
     update(weatherData: WeatherData | undefined) {
-        if(weatherData)
-            this.render(weatherData);
+        if(weatherData) this.render(weatherData);
     }
 
     private render(weatherData: WeatherData): void {
-        if(this.weatherGUI == null) {
-            this.weatherGUI = document.createElement("main");
-            document.body.appendChild(this.weatherGUI);
-        }
-        this.clearNode(this.weatherGUI);
+        if(this.weatherGUI != null) this.clearNode(this.weatherGUI);
+        this.createForm();
 
         //Creating elements 
         const weatherInfo = document.createElement("ul");
@@ -66,12 +64,39 @@ export default class WeatherView implements Observer {
         units.appendChild(unitsText);
         weatherInfo.appendChild(units);
 
-        this.weatherGUI.appendChild(weatherInfo);
+        this.weatherGUI?.appendChild(weatherInfo);
     }
 
     private clearNode(node: HTMLElement) {
         while (node.firstChild) {
             node.removeChild(node.firstChild);
         }
+    }
+
+    public get inputText(): string {
+        if(this.searchField?.value != undefined)
+            return this.searchField?.value;
+        return '';
+    }
+
+    private createForm() {
+        this.weatherGUI = document.createElement("main");
+        this.weatherGUI.setAttribute('id', 'gui');
+        this.searchForm = document.createElement("form");
+        this.searchField = document.createElement("input");
+        const submitButton = document.createElement("input");
+        this.searchField.setAttribute('type', 'text');
+        this.searchField.setAttribute('placeholder', 'Enter a location...');
+        submitButton.setAttribute('type', 'submit');
+        submitButton.setAttribute('value', 'Submit');
+        document.body.appendChild(this.weatherGUI);
+        this.weatherGUI.appendChild(this.searchForm);
+        this.searchForm.appendChild(this.searchField);
+        this.searchForm.appendChild(submitButton);
+        this.appendForm(this.searchForm);
+    }
+
+    private appendForm(form: HTMLFormElement): void {
+        this.weatherGUI?.appendChild(form);
     }
 }

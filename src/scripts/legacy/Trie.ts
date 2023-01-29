@@ -10,7 +10,8 @@ export default class Trie {
     // Compares each character in a string to a list of
     // TrieNodes and inserts new ones for each character
     // that isn't already present in the node map.
-    public insert(query: string): void {
+    public insert(query: string | undefined): void {
+        if(query == undefined) return;
         let current = this.root;
         for(const char of query) {
             let node = current.children.get(char);
@@ -22,11 +23,12 @@ export default class Trie {
         }
         current.isEndOfWord = true;
     }
-    
+
     // Iterates through word a given string's chars, checks if it exists in the Trie, 
     // and calls a helper function to add matching suggestions to an array. 
     // Returns up to 3 suggestions.
-    public search(query: string): string[] {
+    public search(query: string | undefined): string[] | undefined {
+        if(query == undefined) return undefined;
         let current = this.root;
         const suggestions: string[] = [];
         for(const char of query) {

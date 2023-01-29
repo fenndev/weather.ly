@@ -2,9 +2,6 @@ import WeatherData from "./WeatherData";
 
 export default class WeatherModel {
     private _currentWeather?: WeatherData;
-    constructor() {
-        console.log("Oops~!");
-    }
 
     public parseWeatherData(
         city: string,
