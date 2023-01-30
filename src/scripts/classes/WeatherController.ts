@@ -3,7 +3,7 @@ import WeatherModel from "./WeatherModel";
 import WeatherView from "./WeatherView";
 
 export default class WeatherController extends Subject {
-  private key = "53f818d0cdccfe5b5566f280ab1141d5";
+  protected key = "53f818d0cdccfe5b5566f280ab1141d5";
   private view: WeatherView;
   private model: WeatherModel;
 
@@ -57,7 +57,11 @@ export default class WeatherController extends Subject {
         units
       );
       if(this.view != undefined) {
-        this.notify(this.model.currentWeather);
+        await this.notify(this.model.currentWeather);
+        this.view.searchField?.addEventListener('input', (event) => {
+          const { target } = event;
+          if(target) console.log((target as HTMLInputElement).value)
+        });
       }
         
     } catch (error) {
