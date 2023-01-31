@@ -1,7 +1,7 @@
 export default class WeatherData {
     constructor(
         public cityName: string,
-        public stateName: string | null,
+        public stateName: string | undefined,
         public countryName: string,
         public temperature: number,
         public weatherType: string,

@@ -5,7 +5,7 @@ export default class WeatherModel {
 
     public parseWeatherData(
         city: string,
-        state: string | null,
+        state: string | undefined,
         country: string,
         temperature: number,
         weatherType: string,
@@ -16,7 +16,7 @@ export default class WeatherModel {
         ) {
         this._currentWeather = new WeatherData(
             city.toLowerCase(),
-            null,
+            state?.toLowerCase(),
             country.toLowerCase(),
             Number.parseFloat((temperature).toFixed(1)),
             weatherType.toLowerCase(),
@@ -25,7 +25,6 @@ export default class WeatherModel {
             humidity,
             units
         );
-        if(state) this._currentWeather.stateName = state;
     }
 
     // Convert units and return the current weather

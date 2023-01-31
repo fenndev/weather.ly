@@ -87,6 +87,7 @@ export default class WeatherView implements Observer {
         const submitButton = document.createElement("input");
         this.searchField.setAttribute('type', 'text');
         this.searchField.setAttribute('placeholder', 'Enter a location...');
+        this.searchField.setAttribute('name', 'searchForm');
         submitButton.setAttribute('type', 'submit');
         submitButton.setAttribute('value', 'Submit');
         document.body.appendChild(this.weatherGUI);
@@ -98,5 +99,13 @@ export default class WeatherView implements Observer {
 
     private appendForm(form: HTMLFormElement): void {
         this.weatherGUI?.appendChild(form);
+    }
+
+    public get searchFormElement() {
+        return this.searchForm;
+    }
+
+    public get inputElement() {
+        return this.searchField;
     }
 }

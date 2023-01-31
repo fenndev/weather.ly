@@ -7,6 +7,8 @@ export default class WeatherController extends Subject {
   private view: WeatherView;
   private model: WeatherModel;
 
+  private searchForm: HTMLFormElement | undefined;
+
   private rateLimit: number;
   private rateLimitCounter: number;
   private rateLimitTimestamp: number;
@@ -45,6 +47,7 @@ export default class WeatherController extends Subject {
         `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&units=${units}&appid=${this.key}`
       );
       const weather = await weatherResponse.json();
+      if(location.country != 'US') location.state = null;
       this.model.parseWeatherData(
         location.name,
         location.state,
@@ -56,16 +59,27 @@ export default class WeatherController extends Subject {
         weather.main.humidity,
         units
       );
+
+      // TODO: Extract this logic to somewhere else?
       if(this.view != undefined) {
         await this.notify(this.model.currentWeather);
-        this.view.searchField?.addEventListener('input', (event) => {
-          const { target } = event;
-          if(target) console.log((target as HTMLInputElement).value)
+        this.searchForm = this.view.searchFormElement;
+        this.searchForm?.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const form = event.target as HTMLFormElement;
+          const inputElement = form.elements.namedItem('searchForm') as HTMLInputElement;
+          inputElement ? this.fetchWeatherData(inputElement.value) : console.error("The input value cannot be an empty string.");
         });
+
+        // legacy code related to autocomplete feature
+        // this.view.searchField?.addEventListener('input', (event) => {
+        //   const { target } = event;
+        //   if(target) console.log((target as HTMLInputElement).value)
+        // });
       }
         
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   }
 
