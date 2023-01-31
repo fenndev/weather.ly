@@ -14,6 +14,7 @@ export default class WeatherView implements Observer {
 
     update(weatherData: WeatherData | undefined) {
         if(weatherData) this.render(weatherData);
+        else this.reRender();
     }
     
     private render(weatherData: WeatherData): void {
@@ -22,15 +23,17 @@ export default class WeatherView implements Observer {
         this.createWeatherInfo(weatherData);
     }
 
-    // Utility Functions
-
-    private clearNode(node: HTMLElement) {
-        while (node.firstChild) {
-            node.removeChild(node.firstChild);
-        }
+    private reRender(): void {
+        if(this.weatherGUI) this.clearNode(this.weatherGUI);
+        this.createForm();
+        
     }
 
-    private createForm(): HTMLFormElement {
+    // Utility Functions
+
+    private clearNode(node: HTMLElement) { while(node.firstChild) node.removeChild(node.firstChild); }
+
+    private createForm(): void {
         this.weatherGUI = document.createElement("main");
         this.weatherGUI.setAttribute('id', 'gui');
         this.searchForm = document.createElement("form");
@@ -45,11 +48,21 @@ export default class WeatherView implements Observer {
         this.weatherGUI.appendChild(this.searchForm);
         this.searchForm.appendChild(this.searchField);
         this.searchForm.appendChild(submitButton);
-        return this.searchForm;
+        this.weatherGUI.appendChild(this.searchForm);
     }
 
-    private createWeatherInfo(weatherData: WeatherData): HTMLDivElement {
+    private createWeatherInfo(weatherData: WeatherData): void {
         const weatherInfo = document.createElement("div");
+        let temperatureUnits: string;
+        let windSpeedUnits: string;
+        if(weatherData.units == 'metric') {
+            temperatureUnits = '°C';
+            windSpeedUnits = 'kph'
+        }
+        else {
+            temperatureUnits = '°F';
+            windSpeedUnits = 'mph';
+        }
         const city = document.createElement("p");
         const cityText = document.createTextNode(`City: ${weatherData.cityName}`);
         city.appendChild(cityText);
@@ -68,7 +81,7 @@ export default class WeatherView implements Observer {
         weatherInfo.appendChild(country);
 
         const temperature = document.createElement("p");
-        const temperatureText = document.createTextNode(`Temperature: ${weatherData.temperature}`);
+        const temperatureText = document.createTextNode(`Temperature: ${weatherData.temperature}${temperatureUnits}`);
         temperature.appendChild(temperatureText);
         weatherInfo.appendChild(temperature);
 
@@ -78,7 +91,7 @@ export default class WeatherView implements Observer {
         weatherInfo.appendChild(weatherType);
 
         const windSpeed = document.createElement("p");
-        const windSpeedText = document.createTextNode(`Wind Speed: ${weatherData.windSpeed}`);
+        const windSpeedText = document.createTextNode(`Wind Speed: ${weatherData.windSpeed} ${windSpeedUnits}`);
         windSpeed.appendChild(windSpeedText);
         weatherInfo.appendChild(windSpeed);
 
@@ -92,7 +105,7 @@ export default class WeatherView implements Observer {
         units.appendChild(unitsText);
         weatherInfo.appendChild(units);
 
-        return weatherInfo;
+        this.weatherGUI.appendChild(weatherInfo);
     }
     
     // Getters & Setters
