@@ -32,14 +32,16 @@ export default class WeatherController extends Subject {
   }
 
   public async fetchWeatherData(
-    cityName: string,
+    query: string,
     units = "metric"
   ): Promise<void> {
     try {
       if (await this.isRateLimitReached())
         throw new Error("Rate limit reached, please try again later.");
+      const checkedQuery = this.parseQuery(query);
+      if(!checkedQuery) throw new Error('Please enter a valid location.');
       const coordinatesResponse = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${this.key}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${checkedQuery}&limit=1&appid=${this.key}`
       );
       const coordinates: any[] = await coordinatesResponse.json();
       const location: any = coordinates[0];
@@ -92,5 +94,33 @@ export default class WeatherController extends Subject {
       this.rateLimitCounter++;
       return false;
     } else return true;
+  }
+
+  private parseQuery(initQuery: string): string | undefined {
+    const sanitizedQuery: string = this.sanitizeInput(initQuery);
+    const postalCodePattern = /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/;
+    const locationPattern = /^([a-zA-Z]+)(,\s*([a-zA-Z]+))?(,\s*([a-zA-Z]+))?$/;
+    const isPostal: boolean = postalCodePattern.test(sanitizedQuery);
+    const isLocation: boolean = locationPattern.test(sanitizedQuery);
+    
+    if(isPostal || isLocation) return sanitizedQuery;
+    else return undefined;
+  }
+
+  private sanitizeInput(input: string): string {
+      // Strip HTML and script tags
+      let strippedInput = input.replace(/<[^>]*>/g, '');
+      strippedInput = strippedInput.replace(/<script[^>]*>.*<\/script>/ig, '');
+    
+      // Escape special characters
+      let escapedInput = strippedInput.replace(/&/g, '&amp;');
+      escapedInput = escapedInput.replace(/</g, '&lt;');
+      escapedInput = escapedInput.replace(/>/g, '&gt;');
+      escapedInput = escapedInput.replace(/"/g, '&quot;');
+      escapedInput = escapedInput.replace(/'/g, '&#39;');
+
+      // Standardize input
+      const standardInput = escapedInput.toLowerCase();
+      return standardInput;
   }
 }

@@ -12,21 +12,16 @@ export default class WeatherView implements Observer {
         this.createForm();
     }
 
-    update(weatherData: WeatherData | undefined) {
+    update(weatherData: WeatherData) {
         if(weatherData) this.render(weatherData);
-        else this.reRender();
+        else this.render();
     }
     
-    private render(weatherData: WeatherData): void {
+    private render(weatherData?: WeatherData): void {
         if(this.weatherGUI) this.clearNode(this.weatherGUI);
         this.createForm();
-        this.createWeatherInfo(weatherData);
-    }
-
-    private reRender(): void {
-        if(this.weatherGUI) this.clearNode(this.weatherGUI);
-        this.createForm();
-        
+        if(weatherData)
+            this.createWeatherInfo(weatherData);
     }
 
     // Utility Functions
