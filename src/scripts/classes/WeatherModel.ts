@@ -3,7 +3,7 @@ import type WeatherResponse from "../interfaces/WeatherResponse";
 
 export class WeatherModel {
   private _currentWeather!: WeatherData;
-  protected key = "appid=53f818d0cdccfe5b5566f280ab1141d5";
+  protected key = "53f818d0cdccfe5b5566f280ab1141d5";
   private openWeatherMapURL = "https://api.openweathermap.org/data/2.5/weather";
   private limit = 1;
 
@@ -15,7 +15,11 @@ export class WeatherModel {
   ): Promise<WeatherData> {
     try {
       const location: LocationResponse = await this.queryLocation(query);
-      const weather: WeatherResponse = await this.fetchWeather(location.lat, location.lon, units);
+      const weather: WeatherResponse = await this.fetchWeather(
+        location.lat,
+        location.lon,
+        units
+      );
       if (location.country != "US") location.state = null;
       return new WeatherData(
         location.name,
@@ -29,7 +33,7 @@ export class WeatherModel {
         units
       );
     } catch (error) {
-      alert(error);
+      console.error(error.message);
     }
   }
 
@@ -37,7 +41,7 @@ export class WeatherModel {
     const response = await fetch(
       `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${this.limit}&appid=${this.key}`
     );
-    const location: LocationResponse = await (response.json())[0];
+    const location: LocationResponse = await response.json()[0];
     return location;
   }
 
@@ -82,27 +86,29 @@ export class WeatherModel {
   }
 
   // Convert units and return the current weather
-  public convertUnits() {
+  public convertUnits(): WeatherData {
     try {
-      if (this._currentWeather.units === "imperial") {
+      if (this._currentWeather.unitSystem === "imperial") {
         this._currentWeather.temperature = Number.parseFloat(
           ((this._currentWeather.temperature - 32) * (5 / 9)).toFixed(1)
         );
         this._currentWeather.windSpeed = Number.parseFloat(
           (this._currentWeather.windSpeed * 1.609).toFixed(1)
         );
-        this._currentWeather.units = "metric";
-      } else if (this._currentWeather.units === "metric") {
+        this._currentWeather.unitSystem = "metric";
+      } else if (this._currentWeather.unitSystem === "metric") {
         this._currentWeather.temperature = Number.parseFloat(
           (this._currentWeather.temperature * (9 / 5) + 32).toFixed(1)
         );
         this._currentWeather.windSpeed = Number.parseFloat(
           (this._currentWeather.windSpeed / 1.609).toFixed(1)
         );
-        this._currentWeather.units = "imperial";
-      } else {
+        this._currentWeather.unitSystem = "imperial";
+        return this._currentWeather;
+      } 
+      else {
         throw new Error(
-          `Error: Unrecognized units. ${this._currentWeather.units} is not a known value.`
+          `Error: Unrecognized unitSystem. /"${this._currentWeather.unitSystem}/" is not a known value.`
         );
       }
     } catch (error: any) {
@@ -125,7 +131,9 @@ export default class WeatherData {
   public weatherID: number;
   public windSpeed: number;
   public humidity: number;
-  public units: string;
+  public unitSystem: string;
+  public temperatureUnits: string;
+  public windSpeedUnits: string;
 
   constructor(
     city: string,
@@ -136,7 +144,7 @@ export default class WeatherData {
     weatherID: number,
     windSpeed: number,
     humidity: number,
-    units: string
+    unitSystem: string
   ) {
     this.cityName = city.toLowerCase();
     this.stateName = state?.toLowerCase();
@@ -146,6 +154,14 @@ export default class WeatherData {
     this.weatherID = weatherID;
     this.windSpeed = Number.parseFloat(windSpeed.toFixed(1));
     this.humidity = humidity;
-    this.units = units;
+    this.unitSystem = unitSystem;
+
+    if (unitSystem == "metric") {
+      this.temperatureUnits = "°C";
+      this.windSpeedUnits = "kph";
+    } else {
+      this.temperatureUnits = "°F";
+      this.windSpeedUnits = "mph";
+    }
   }
 }
