@@ -2,7 +2,6 @@
   "name": "weather.ly",
   "version": "0.0.1",
   "description": "A weather application written in HTML, CSS, and Javascript.",
-  "main": "main.js",
   "type": "module",
   "scripts": {
     "dev": "vite",

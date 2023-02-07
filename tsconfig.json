@@ -12,6 +12,6 @@
     "skipLibCheck": true
   },
   "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
-  "exclude": ["node_modules", "src/scripts/legacy"],
+  "exclude": ["src/scripts/legacy"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
