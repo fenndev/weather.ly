@@ -26,7 +26,7 @@ export class WeatherModel {
         units
       );
       if (location.country != "US") location.state = null;
-      return new WeatherData(
+      this._currentWeather = new WeatherData(
         location.name,
         location.state,
         location.country,
@@ -37,6 +37,7 @@ export class WeatherModel {
         weather.main.humidity,
         units
       );
+      return this.currentWeather;
     } catch (error) {
       console.error(error.message);
       return null;
@@ -44,10 +45,11 @@ export class WeatherModel {
   }
 
   private async queryLocation(query: string): Promise<LocationResponse> {
+    console.log(query);
     const response = await fetch(
       `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${this.limit}&appid=${this.key}`
     );
-    const location: LocationResponse = await response.json()[0];
+    const location: LocationResponse = (await response.json())[0];
     return location;
   }
 
