@@ -3,10 +3,15 @@ import type WeatherResponse from "../interfaces/WeatherResponse";
 
 export class WeatherModel {
   private _currentWeather!: WeatherData;
-  protected key = "53f818d0cdccfe5b5566f280ab1141d5";
-  private openWeatherMapURL = "https://api.openweathermap.org/data/2.5/weather";
-  private limit = 1;
+  protected key: string;
+  private openWeatherMapURL: string;
+  private limit: number;
 
+  constructor() {
+    this.key = "53f818d0cdccfe5b5566f280ab1141d5";
+    this.openWeatherMapURL = "https://api.openweathermap.org/data/2.5/weather";
+    this.limit = 1;
+  }
   // Weather Fetching Functions
 
   public async getWeatherData(
@@ -34,6 +39,7 @@ export class WeatherModel {
       );
     } catch (error) {
       console.error(error.message);
+      return null;
     }
   }
 
@@ -105,8 +111,7 @@ export class WeatherModel {
         );
         this._currentWeather.unitSystem = "imperial";
         return this._currentWeather;
-      } 
-      else {
+      } else {
         throw new Error(
           `Error: Unrecognized unitSystem. /"${this._currentWeather.unitSystem}/" is not a known value.`
         );
@@ -122,7 +127,7 @@ export class WeatherModel {
   }
 }
 
-export default class WeatherData {
+export class WeatherData {
   public cityName: string;
   public stateName: string | undefined;
   public countryName: string;
