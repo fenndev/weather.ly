@@ -1,27 +1,23 @@
-import WeatherData from "./WeatherData";
+import type LocationResponse from "../interfaces/LocationResponse";
+import type WeatherResponse from "../interfaces/WeatherResponse";
 
-export default class WeatherModel {
-  private _currentWeather?: WeatherData;
-  protected key = "53f818d0cdccfe5b5566f280ab1141d5";
+export class WeatherModel {
+  private _currentWeather!: WeatherData;
+  protected key = "appid=53f818d0cdccfe5b5566f280ab1141d5";
+  private openWeatherMapURL = "https://api.openweathermap.org/data/2.5/weather";
+  private limit = 1;
 
-  public async fetchWeatherData(
+  // Weather Fetching Functions
+
+  public async getWeatherData(
     query: string,
     units = "metric"
-  ): Promise<void> {
+  ): Promise<WeatherData> {
     try {
-      const checkedQuery = this.parseQuery(query);
-      if (!checkedQuery) throw new Error("Please enter a valid location.");
-      const coordinatesResponse = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${checkedQuery}&limit=1&appid=${this.key}`
-      );
-      const coordinates: any[] = await coordinatesResponse.json();
-      const location: any = coordinates[0];
-      const weatherResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&units=${units}&appid=${this.key}`
-      );
-      const weather = await weatherResponse.json();
+      const location: LocationResponse = await this.queryLocation(query);
+      const weather: WeatherResponse = await this.fetchWeather(location.lat, location.lon, units);
       if (location.country != "US") location.state = null;
-      this.parseWeatherData(
+      return new WeatherData(
         location.name,
         location.state,
         location.country,
@@ -37,31 +33,27 @@ export default class WeatherModel {
     }
   }
 
-  public parseWeatherData(
-    city: string,
-    state: string | undefined,
-    country: string,
-    temperature: number,
-    weatherType: string,
-    weatherID: number,
-    windSpeed: number,
-    humidity: number,
-    units: string
-  ) {
-    this._currentWeather = new WeatherData(
-      city.toLowerCase(),
-      state?.toLowerCase(),
-      country.toLowerCase(),
-      Number.parseFloat(temperature.toFixed(1)),
-      weatherType.toLowerCase(),
-      weatherID,
-      Number.parseFloat(windSpeed.toFixed(1)),
-      humidity,
-      units
+  private async queryLocation(query: string): Promise<LocationResponse> {
+    const response = await fetch(
+      `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${this.limit}&appid=${this.key}`
     );
+    const location: LocationResponse = await (response.json())[0];
+    return location;
   }
 
-  private parseQuery(initQuery: string): string | undefined {
+  private async fetchWeather(
+    lat: number,
+    lon: number,
+    units: string
+  ): Promise<WeatherResponse> {
+    const response = await fetch(
+      `${this.openWeatherMapURL}?lat=${lat}&lon=${lon}&units=${units}&appid=${this.key}`
+    );
+    const weather: WeatherResponse = await response.json();
+    return weather;
+  }
+
+  public parseQuery(initQuery: string): string | undefined {
     const sanitizedQuery: string = this.sanitizeInput(initQuery);
     const postalCodePattern = /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/;
     const locationPattern = /^([a-zA-Z]+)(,\s*([a-zA-Z]+))?(,\s*([a-zA-Z]+))?$/;
@@ -74,29 +66,86 @@ export default class WeatherModel {
 
   private sanitizeInput(input: string): string {
     // Strip HTML and script tags
-    let strippedInput = input.replace(/<[^>]*>/g, "");
-    strippedInput = strippedInput.replace(/<script[^>]*>.*<\/script>/gi, "");
+    let untaggedString = input.replace(/<[^>]*>/g, "");
+    untaggedString = untaggedString.replace(/<script[^>]*>.*<\/script>/gi, "");
 
     // Escape special characters
-    let escapedInput = strippedInput.replace(/&/g, "&amp;");
-    escapedInput = escapedInput.replace(/</g, "&lt;");
-    escapedInput = escapedInput.replace(/>/g, "&gt;");
-    escapedInput = escapedInput.replace(/"/g, "&quot;");
-    escapedInput = escapedInput.replace(/'/g, "&#39;");
+    let escapedString = untaggedString.replace(/&/g, "&amp;");
+    escapedString = escapedString.replace(/</g, "&lt;");
+    escapedString = escapedString.replace(/>/g, "&gt;");
+    escapedString = escapedString.replace(/"/g, "&quot;");
+    escapedString = escapedString.replace(/'/g, "&#39;");
 
     // Standardize input
-    const standardInput = escapedInput.toLowerCase();
-    return standardInput;
+    const sanitizedString = escapedString.toLowerCase();
+    return sanitizedString;
   }
 
   // Convert units and return the current weather
   public convertUnits() {
-    this._currentWeather?.convertUnits();
-    return this.currentWeather;
+    try {
+      if (this._currentWeather.units === "imperial") {
+        this._currentWeather.temperature = Number.parseFloat(
+          ((this._currentWeather.temperature - 32) * (5 / 9)).toFixed(1)
+        );
+        this._currentWeather.windSpeed = Number.parseFloat(
+          (this._currentWeather.windSpeed * 1.609).toFixed(1)
+        );
+        this._currentWeather.units = "metric";
+      } else if (this._currentWeather.units === "metric") {
+        this._currentWeather.temperature = Number.parseFloat(
+          (this._currentWeather.temperature * (9 / 5) + 32).toFixed(1)
+        );
+        this._currentWeather.windSpeed = Number.parseFloat(
+          (this._currentWeather.windSpeed / 1.609).toFixed(1)
+        );
+        this._currentWeather.units = "imperial";
+      } else {
+        throw new Error(
+          `Error: Unrecognized units. ${this._currentWeather.units} is not a known value.`
+        );
+      }
+    } catch (error: any) {
+      console.error(error.message);
+    }
   }
 
   // Return current weather information
-  public get currentWeather(): WeatherData | undefined {
+  public get currentWeather(): WeatherData {
     return this._currentWeather;
+  }
+}
+
+export default class WeatherData {
+  public cityName: string;
+  public stateName: string | undefined;
+  public countryName: string;
+  public temperature: number;
+  public weatherType: string;
+  public weatherID: number;
+  public windSpeed: number;
+  public humidity: number;
+  public units: string;
+
+  constructor(
+    city: string,
+    state: string | undefined,
+    country: string,
+    temperature: number,
+    weatherType: string,
+    weatherID: number,
+    windSpeed: number,
+    humidity: number,
+    units: string
+  ) {
+    this.cityName = city.toLowerCase();
+    this.stateName = state?.toLowerCase();
+    this.countryName = country.toLowerCase();
+    this.temperature = Number.parseFloat(temperature.toFixed(1));
+    this.weatherType = weatherType.toLowerCase();
+    this.weatherID = weatherID;
+    this.windSpeed = Number.parseFloat(windSpeed.toFixed(1));
+    this.humidity = humidity;
+    this.units = units;
   }
 }

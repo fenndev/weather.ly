@@ -1,5 +1,5 @@
 import RateLimiter from "./RateLimiter";
-import WeatherModel from "./WeatherModel";
+import { WeatherModel } from "./WeatherModel";
 
 export default class WeatherController {
   

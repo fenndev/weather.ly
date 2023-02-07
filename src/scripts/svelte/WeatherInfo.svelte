@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type WeatherData from '../classes/WeatherData';
+    import type WeatherData from '../classes/WeatherModel';
     export let weatherData: WeatherData;
     let temperatureUnits: string;
     let windSpeedUnits: string;
