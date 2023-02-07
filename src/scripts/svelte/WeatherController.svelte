@@ -1,6 +1,7 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import Subject from '../classes/utility/Subject';
-    import WeatherModel from "../classes/WeatherModel";
+    import type WeatherModel from "../classes/WeatherModel";
     import WeatherView from "./WeatherView.svelte";
 
     let key = "53f818d0cdccfe5b5566f280ab1141d5";
@@ -13,6 +14,11 @@
     let rateLimitCounter: number;
     let rateLimitTimestamp: number;
     let rateLimitPeriod: number;
+
+    onMount(async () => {
+        view = new WeatherView({ target: document.body });
+        
+    })
 
     async function fetchWeatherData(
         query: string,
