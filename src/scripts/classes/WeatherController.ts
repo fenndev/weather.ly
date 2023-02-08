@@ -14,8 +14,10 @@ export default class WeatherController {
   public async getWeatherInformation(query: string, units = 'imperial'): Promise<WeatherData> {
     try {
       if(!this.rateLimiter.isRateLimitReached) throw new Error("Rate limit exceeded! Please slow down!");
-      const sanitizedQuery: string = this.model.parseQuery(query);
-      const weatherData = await this.model.getWeatherData(sanitizedQuery, units);
+      const sanitizedQuery: string = this.model.sanitizeQuery(query);
+      if(!sanitizedQuery) throw new Error(`Query is undefined.`);
+      const weatherData: WeatherData = await this.model.getWeatherData(sanitizedQuery, units);
+      
       return weatherData;
     } catch (error) {
       console.error(error.message);

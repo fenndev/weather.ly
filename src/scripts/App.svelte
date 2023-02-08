@@ -4,7 +4,7 @@
     import WeatherController from './classes/WeatherController';
     import type { WeatherModel, WeatherData } from './classes/WeatherModel';
     import { onMount } from 'svelte';
-    import { weatherData } from './classes/utility/Store.js';
+    import { weatherData } from './classes/Store.js';
     
     let units = 'imperial';
     let weatherInfo: WeatherData;

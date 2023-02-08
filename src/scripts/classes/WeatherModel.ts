@@ -25,7 +25,7 @@ export class WeatherModel {
         location.lon,
         units
       );
-      if (location.country != "US") location.state = null;
+      if (location.country != "US") location.state = undefined;
       this._currentWeather = new WeatherData(
         location.name,
         location.state,
@@ -44,11 +44,12 @@ export class WeatherModel {
     }
   }
 
-  private async queryLocation(query: string): Promise<LocationResponse> {
-    console.log(query);
+  private async queryLocation(
+    query: string,
+  ): Promise<LocationResponse> {
     const response = await fetch(
-      `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${this.limit}&appid=${this.key}`
-    );
+        `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=${this.limit}&appid=${this.key}`
+      );
     const location: LocationResponse = (await response.json())[0];
     return location;
   }
@@ -65,18 +66,7 @@ export class WeatherModel {
     return weather;
   }
 
-  public parseQuery(initQuery: string): string | undefined {
-    const sanitizedQuery: string = this.sanitizeInput(initQuery);
-    const postalCodePattern = /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/;
-    const locationPattern = /^([a-zA-Z]+)(,\s*([a-zA-Z]+))?(,\s*([a-zA-Z]+))?$/;
-    const isPostal: boolean = postalCodePattern.test(sanitizedQuery);
-    const isLocation: boolean = locationPattern.test(sanitizedQuery);
-
-    if (isPostal || isLocation) return sanitizedQuery;
-    else return undefined;
-  }
-
-  private sanitizeInput(input: string): string {
+  public sanitizeQuery(input: string): string {
     // Strip HTML and script tags
     let untaggedString = input.replace(/<[^>]*>/g, "");
     untaggedString = untaggedString.replace(/<script[^>]*>.*<\/script>/gi, "");
