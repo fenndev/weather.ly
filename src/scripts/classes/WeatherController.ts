@@ -5,6 +5,7 @@ export default class WeatherController {
   
   private model: WeatherModel;
   private rateLimiter: RateLimiter;
+  private URL = 'https://weatherlee.cyclic.app'
 
   constructor() {
     this.model = new WeatherModel();
@@ -16,8 +17,9 @@ export default class WeatherController {
       if(!this.rateLimiter.isRateLimitReached) throw new Error("Rate limit exceeded! Please slow down!");
       const sanitizedQuery: string = this.model.sanitizeQuery(query);
       if(!sanitizedQuery) throw new Error(`Query is undefined.`);
-      const weatherData: WeatherData = await this.model.getWeatherData(sanitizedQuery, units);
-      
+      const response = await fetch(`${this.URL}/?q=${query}`);
+      const parsedResponse = await response.json();
+      const weatherData = parsedResponse;
       return weatherData;
     } catch (error) {
       console.error(error.message);
