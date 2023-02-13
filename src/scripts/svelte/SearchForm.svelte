@@ -1,24 +1,40 @@
 <script lang="ts">
-    let location = '';
+    let location: string = '';
+    let selectedUnitSystem: string = '';
 
-    export let onSubmit: (location: string) => void;
+    export let onSubmit: (location: string, unitSystem: string) => void;
 
     function handleSubmit(event: Event): void {
         let searchValue = (event.target as HTMLFormElement).elements.namedItem('location') as HTMLInputElement;
+        let unitSystem = (event.target as HTMLFormElement).elements.namedItem('units') as HTMLInputElement;
         location = searchValue.value;
-        onSubmit(location);
+        selectedUnitSystem = (unitSystem as HTMLInputElement).value;
+        onSubmit(location, selectedUnitSystem);
     };
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-    <input type="text" name='location' placeholder="Enter a location...">
-    <button type="submit">Submit</button>
+    <div>
+        <input type="text" name='location' placeholder="Enter a location...">
+        <button type="submit">Submit</button>
+    </div>
+    <fieldset>
+        <legend>Unit System: </legend>
+        <div>
+            <input type="radio" name="units" id="metric" value="metric">
+            <label for="metric">Metric</label>
+        </div>
+        <div>
+            <input type="radio" name="units" id="imperial" value="imperial">
+            <label for="imperial">Imperial</label>
+        </div>
+    </fieldset>
 </form>
 
 <style>
     form {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 20px;
@@ -30,6 +46,10 @@
         height: 40px;
         font-size: 18px;
         margin-right: 10px;
+    }
+
+    fieldset {
+        
     }
 
     button[type="submit"] {

@@ -17,7 +17,7 @@ export default class WeatherController {
       if(!this.rateLimiter.isRateLimitReached) throw new Error("Rate limit exceeded! Please slow down!");
       const sanitizedQuery: string = this.model.sanitizeQuery(query);
       if(!sanitizedQuery) throw new Error(`Query is undefined.`);
-      const response = await fetch(`${this.URL}/?q=${query}`);
+      const response = await fetch(`${this.URL}/?q=${query}&units=${units}`);
       const parsedResponse = await response.json();
       const weatherData = parsedResponse;
       return weatherData;

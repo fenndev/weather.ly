@@ -8,7 +8,7 @@
 <div class="container">
     <p>
         <Fa class="icon" icon = {faLocation} />
-        {weatherData.cityName}{#if weatherData.stateName}, {weatherData.stateName}, {/if}{weatherData.countryName}
+        {weatherData.cityName}, {#if weatherData.stateName}{weatherData.stateName}, {/if}{weatherData.countryName}
     </p>
     <p>
         <Fa class="icon" icon={faThermometerHalf} />
