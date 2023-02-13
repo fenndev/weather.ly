@@ -3,6 +3,7 @@
     let selectedUnitSystem: string = '';
 
     export let onSubmit: (location: string, unitSystem: string) => void;
+    export let onUnitChange: () => void;
 
     function handleSubmit(event: Event): void {
         let searchValue = (event.target as HTMLFormElement).elements.namedItem('location') as HTMLInputElement;
@@ -11,6 +12,8 @@
         selectedUnitSystem = (unitSystem as HTMLInputElement).value;
         onSubmit(location, selectedUnitSystem);
     };
+
+    function handleChange(): void { onUnitChange() }
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
@@ -21,11 +24,11 @@
     <fieldset>
         <legend>Unit System: </legend>
         <div>
-            <input type="radio" name="units" id="metric" value="metric">
+            <input required on:change|preventDefault={handleChange} type="radio" name="units" id="metric" value="metric">
             <label for="metric">Metric</label>
         </div>
         <div>
-            <input type="radio" name="units" id="imperial" value="imperial">
+            <input required on:change|preventDefault={handleChange} type="radio" name="units" id="imperial" value="imperial">
             <label for="imperial">Imperial</label>
         </div>
     </fieldset>

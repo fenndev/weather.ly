@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { WeatherData } from '../classes/WeatherModel';
+    import type WeatherData from '../classes/WeatherData';
     export let weatherData: WeatherData;
     import Fa from 'svelte-fa/src/fa.svelte'
     import { faThermometerHalf, faWind, faTint, faLocation, faRuler } from '@fortawesome/free-solid-svg-icons';
