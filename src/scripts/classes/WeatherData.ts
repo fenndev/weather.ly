@@ -35,7 +35,8 @@ export default class WeatherData {
         this.changeUnitDisplay();
     }
 
-    public convertUnits(): WeatherData {
+    public convertUnits(desiredUnits: string): WeatherData {
+        if (desiredUnits === this.unitSystem) return this;
         if (this.unitSystem === 'imperial') {
             this.temperature = Number.parseFloat(
                 ((this.temperature - 32) * (5 / 9)).toFixed(1)

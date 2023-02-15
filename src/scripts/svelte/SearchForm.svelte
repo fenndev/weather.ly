@@ -1,34 +1,61 @@
 <script lang="ts">
+    import { weather } from '../classes/Store';
+    import fetchWeather from '../functions/FetchWeather';
+    import RateLimiter from '../classes/RateLimiter';
+    import { onMount } from 'svelte';
+    let rateLimiter: RateLimiter;
     let location: string = '';
     let selectedUnitSystem: string = '';
 
-    export let onSubmit: (location: string, unitSystem: string) => void;
-    export let onUnitChange: () => void;
+    onMount(() => (rateLimiter = new RateLimiter()));
 
-    function handleSubmit(event: Event): void {
-        let searchValue = (event.target as HTMLFormElement).elements.namedItem('location') as HTMLInputElement;
-        let unitSystem = (event.target as HTMLFormElement).elements.namedItem('units') as HTMLInputElement;
-        location = searchValue.value;
-        selectedUnitSystem = (unitSystem as HTMLInputElement).value;
-        onSubmit(location, selectedUnitSystem);
-    };
+    $: {
+        if ($weather) weather.convertUnits(selectedUnitSystem);
+    }
 
-    function handleChange(): void { onUnitChange() }
+    async function handleSubmit() {
+        if (rateLimiter.isRateLimitReached()) return;
+        fetchWeatherInfo(location, selectedUnitSystem);
+    }
+
+    async function fetchWeatherInfo(location: string, units: string) {
+        const weatherInfo = await fetchWeather(location, units);
+        weather.updateWeather(weatherInfo);
+    }
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
     <div>
-        <input type="text" name='location' placeholder="Enter a location...">
+        <input
+            bind:value={location}
+            type="text"
+            name="location"
+            placeholder="Enter a location..."
+        />
         <button type="submit">Submit</button>
     </div>
     <fieldset>
         <legend>Unit System: </legend>
         <div>
-            <input required on:change|preventDefault={handleChange} type="radio" name="units" id="metric" value="metric">
+            <input
+                required
+                bind:group={selectedUnitSystem}
+                type="radio"
+                name="units"
+                id="metric"
+                value="metric"
+            />
             <label for="metric">Metric</label>
         </div>
         <div>
-            <input required on:change|preventDefault={handleChange} type="radio" name="units" id="imperial" value="imperial">
+            <input
+                required
+                bind:group={selectedUnitSystem}
+                type="radio"
+                name="units"
+                id="imperial"
+                value="imperial"
+            />
             <label for="imperial">Imperial</label>
         </div>
     </fieldset>
@@ -43,7 +70,7 @@
         padding: 20px;
     }
 
-    input[type="text"] {
+    input[type='text'] {
         width: 400px;
         padding: 0;
         height: 40px;
@@ -52,15 +79,14 @@
     }
 
     fieldset {
-        
     }
 
-    button[type="submit"] {
+    button[type='submit'] {
         width: 100px;
         height: 40px;
         background-color: blue;
         color: white;
-        font-size: 18px;
+        font-size: 19px;
         border: none;
         cursor: pointer;
     }

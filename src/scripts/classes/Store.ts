@@ -7,7 +7,8 @@ function createWeather() {
     return {
         subscribe,
         updateWeather: (weatherData: WeatherData) => set(weatherData),
-        convertUnits: () => update((weatherData) => weatherData.convertUnits()),
+        convertUnits: (selectedUnits: string) =>
+            update((weatherData) => weatherData.convertUnits(selectedUnits)),
         reset: () => set(null),
     };
 }
