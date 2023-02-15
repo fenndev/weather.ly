@@ -4,8 +4,8 @@
     import WeatherController from './classes/WeatherController';
     import type WeatherData from './classes/WeatherData';
     import { onMount } from 'svelte';
-    import { weatherData } from './classes/Store.js';
-    
+    import { weather } from './classes/Store.js';
+
     let weatherInfo: WeatherData;
     let weatherController: WeatherController;
     onMount(() => {
@@ -13,20 +13,26 @@
     });
 
     async function fetchWeatherInfo(location: string, units: string) {
-        weatherInfo = await weatherController.getWeatherInformation(location, units);
-        weatherData.set(weatherInfo);
+        weatherInfo = await weatherController.getWeatherInformation(
+            location,
+            units
+        );
+        weather.updateWeather(weatherInfo);
     }
 
     function handleUnitChange() {
-        if(!weatherInfo) return;
+        if (!weatherInfo) return;
         weatherInfo = weatherInfo.convertUnits();
-        weatherData.update(() => weatherInfo);
+        weather.updateWeather(weatherInfo);
     }
 </script>
 
 <main>
-    <SearchForm onSubmit={(location, units) => fetchWeatherInfo(location, units)} onUnitChange={() => handleUnitChange()}/>
-    {#if $weatherData}
-    <WeatherInfo weatherData={$weatherData}/>
+    <SearchForm
+        onSubmit={(location, units) => fetchWeatherInfo(location, units)}
+        onUnitChange={() => handleUnitChange()}
+    />
+    {#if $weather}
+        <WeatherInfo weatherData={$weather} />
     {/if}
 </main>
