@@ -1,12 +1,15 @@
 # weather.ly
+
 A weather application built with HTML, CSS, and Javascript.
 
 ## Project
 
 ### Fetch Weather Data
+
 In order to properly fetch the weather data, we need to make use two separate APIs from OpenWeatherMap: **Current Weather Data** and **Geolocation**.
 
 #### Current Weather Data
+
 The API call for the Current Weather Data looks like:
 `https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}`.
 
@@ -62,15 +65,15 @@ The Current Weather Data API response follows this format:
 
 For the purposes of this application, we are interested in the following information:
 
-* `response.weather.description`, which offers a brief description of the weather conditions
-* `response.main.temp`, which gives us the current temperature (by default in Kelvin)
-* `response.main.pressure`, which returns the atmospheric pressure in hPa
-* `response.wind.speed`, giving us the wind speed by default in meters/sec.
-* `response.wind.deg`, the direction the wind is blowing
-* `response.dt`, the time of data calculation (Unix UTC)
-* `response.sys.country`, the country code
-* `response.timezone`, the timezone of the country
-* `response.name`, the name of the country
+-   `response.weather.description`, which offers a brief description of the weather conditions
+-   `response.main.temp`, which gives us the current temperature (by default in Kelvin)
+-   `response.main.pressure`, which returns the atmospheric pressure in hPa
+-   `response.wind.speed`, giving us the wind speed by default in meters/sec.
+-   `response.wind.deg`, the direction the wind is blowing
+-   `response.dt`, the time of data calculation (Unix UTC)
+-   `response.sys.country`, the country code
+-   `response.timezone`, the timezone of the country
+-   `response.name`, the name of the country
 
 #### Geocoding API
 
@@ -135,25 +138,25 @@ An example of the API response:
 
 For the most simple functionality possible, the only pieces of information we would be interested in are the following:
 
-* `response.lat`, latitude of the city
-* `response.lon`, longitude of the city
+-   `response.lat`, latitude of the city
+-   `response.lon`, longitude of the city
 
-Both of these values would then be passed into a separate API call to fetch the weather data. 
+Both of these values would then be passed into a separate API call to fetch the weather data.
 
 ### Plan
 
 In order for this to be a well-designed application, we need to make use of the following:
 
-* A `fetch` request to query the Geocoding API using the name of the city provided by the user
-* A `fetch` request to query the Current Weather Data API using the latitude and longitude provided by the Geocoding API
-* A class to store the weather data
-* Functions to render the weather data to the screen
+-   A `fetch` request to query the Geocoding API using the name of the city provided by the user
+-   A `fetch` request to query the Current Weather Data API using the latitude and longitude provided by the Geocoding API
+-   A class to store the weather data
+-   Functions to render the weather data to the screen
 
 ### Future Plans
 
 The following are 'nice-to-haves' that would improve the overall aesthetic and functionality of the application, but aren't strictly necessary:
 
-* Add a button to capture the current location of the user
-* Auto-suggest the user with a list of cities based on their input as they type
-* Allow data persistence between sessions
-* Multiple city support
+-   Add a button to capture the current location of the user
+-   Auto-suggest the user with a list of cities based on their input as they type
+-   Allow data persistence between sessions
+-   Multiple city support
