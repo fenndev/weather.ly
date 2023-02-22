@@ -13,4 +13,7 @@ function createWeather() {
     };
 }
 
+const loading = writable<boolean>(false);
+
 export const weather = createWeather();
+export const isLoading = loading;

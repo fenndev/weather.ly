@@ -22,11 +22,11 @@ export default class WeatherData {
         humidity: number,
         unitSystem: string
     ) {
-        this.cityName = city.toLowerCase();
-        this.stateName = state?.toLowerCase();
-        this.countryName = country.toLowerCase();
+        this.cityName = city;
+        this.stateName = state;
+        this.countryName = country;
         this.temperature = Number.parseFloat(temperature.toFixed(1));
-        this.weatherType = weatherType.toLowerCase();
+        this.weatherType = weatherType;
         this.weatherID = weatherID;
         this.windSpeed = Number.parseFloat(windSpeed.toFixed(1));
         this.humidity = humidity;

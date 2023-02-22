@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { weather } from '../classes/Store';
+    import { isLoading, weather } from '../classes/Store';
     import fetchWeather from '../functions/FetchWeather';
     import RateLimiter from '../classes/RateLimiter';
     import { onMount } from 'svelte';
@@ -19,8 +19,10 @@
     }
 
     async function fetchWeatherInfo(location: string, units: string) {
+        isLoading.set(true);
         const weatherInfo = await fetchWeather(location, units);
         weather.updateWeather(weatherInfo);
+        isLoading.set(false);
     }
 </script>
 
