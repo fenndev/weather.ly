@@ -6,6 +6,7 @@
     let rateLimiter: RateLimiter;
     let location: string = '';
     let selectedUnitSystem: string = '';
+    let thrownError = null;
 
     onMount(() => (rateLimiter = new RateLimiter()));
 
@@ -19,10 +20,15 @@
     }
 
     async function fetchWeatherInfo(location: string, units: string) {
-        isLoading.set(true);
-        const weatherInfo = await fetchWeather(location, units);
-        weather.updateWeather(weatherInfo);
-        isLoading.set(false);
+        try {
+            isLoading.set(true);
+            const weatherInfo = await fetchWeather(location, units);
+            weather.updateWeather(weatherInfo);
+            isLoading.set(false);
+        } catch (error: unknown) {
+            thrownError = error;
+            isLoading.set(false);
+        }
     }
 </script>
 
@@ -35,6 +41,11 @@
             placeholder="Enter a location..."
         />
         <button type="submit">Submit</button>
+        {#if thrownError}
+            <div>
+                <span class="error">Error: {thrownError.message}</span>
+            </div>
+        {/if}
     </div>
     <fieldset>
         <legend>Unit System: </legend>
@@ -80,9 +91,6 @@
         margin-right: 10px;
     }
 
-    fieldset {
-    }
-
     button[type='submit'] {
         width: 100px;
         height: 40px;
@@ -91,5 +99,9 @@
         font-size: 19px;
         border: none;
         cursor: pointer;
+    }
+
+    .error {
+        color: red;
     }
 </style>

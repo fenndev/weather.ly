@@ -7,6 +7,7 @@
         <svg width="50" height="50" viewBox="0 0 50 50">
             <square cx="25" cy="25" r="20" fill="none" stroke-width="4" />
         </svg>
+        <span>Please wait...</span>
     </div>
 {/if}
 
@@ -21,8 +22,10 @@
         background-color: rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(5px);
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 2rem;
     }
 
     .loader svg {
