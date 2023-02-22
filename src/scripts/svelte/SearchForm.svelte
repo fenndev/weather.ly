@@ -24,6 +24,7 @@
             isLoading.set(true);
             const weatherInfo = await fetchWeather(location, units);
             weather.updateWeather(weatherInfo);
+            thrownError = null;
             isLoading.set(false);
         } catch (error: unknown) {
             thrownError = error;
