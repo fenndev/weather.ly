@@ -1,23 +1,11 @@
 <script lang="ts">
-    import SearchForm from './svelte/SearchForm.svelte';
-    import WeatherInfo from './svelte/WeatherInfo.svelte';
-    import type WeatherData from './classes/WeatherData';
     import { weather } from './classes/Store.js';
-    import Loader from './svelte/Loader.svelte';
+    import Header from './svelte/Header.svelte';
+    import Card from './svelte/Card.svelte';
+    import '../global.css';
 </script>
 
-<main>
-    <Loader />
-    <SearchForm />
-    {#if $weather}
-        <WeatherInfo />
-    {/if}
-</main>
-
-<style>
-    :global(body) {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-</style>
+<Header />
+{#if $weather}
+    <Card />
+{/if}
