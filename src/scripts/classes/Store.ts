@@ -22,12 +22,19 @@ export const isLoading = loading;
 const currentDate = writable(new Date().toLocaleDateString());
 
 // Create a store for the current time
-const currentTime = writable(new Date().toLocaleTimeString());
+const currentTime = writable(
+    new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+);
 
 // Update the current date and time every minute
 setInterval(() => {
     currentDate.set(new Date().toLocaleDateString());
-    currentTime.set(new Date().toLocaleTimeString());
+    currentTime.set(
+        new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+        })
+    );
 }, 60000);
 
 export const date = currentDate;
