@@ -1,39 +1,35 @@
 <script lang="ts">
-    import { isLoading } from '../classes/Store';
     import fetchWeather from '../functions/FetchWeather';
     import RateLimiter from '../classes/RateLimiter';
-    import { getContext, onMount, setContext } from 'svelte';
+    import { onMount } from 'svelte';
+    import { weather } from '../classes/Store';
     import type WeatherData from '../classes/WeatherData';
     let rateLimiter: RateLimiter;
     let location: string = '';
     let selectedUnitSystem: string = '';
-    let thrownError = null;
-    const weather: WeatherData = getContext('weather');
+    let thrownError: any = null;
 
     onMount(() => {
         rateLimiter = new RateLimiter();
         fetchWeatherInfo('seattle', 'imperial');
+        console.log(thrownError);
     });
 
     $: {
-        if (weather) weather.convertUnits(selectedUnitSystem);
+        if ($weather) $weather.convertUnits(selectedUnitSystem);
     }
 
     async function handleSubmit() {
         if (rateLimiter.isRateLimitReached()) return;
-        fetchWeatherInfo(location, selectedUnitSystem);
+        await fetchWeatherInfo(location, selectedUnitSystem);
     }
 
     async function fetchWeatherInfo(location: string, units: string) {
         try {
-            isLoading.set(true);
-            const weatherInfo = await fetchWeather(location, units);
-            setContext('weather', weatherInfo);
-            thrownError = null;
-            isLoading.set(false);
-        } catch (error: unknown) {
+            weather.updateWeather(await fetchWeather(location, units));
+        } catch (error: any) {
+            console.log(error.message);
             thrownError = error;
-            isLoading.set(false);
         }
     }
 </script>
@@ -49,7 +45,7 @@
                 placeholder="Enter a location..."
             />
             <button type="submit">Submit</button>
-            {#if thrownError}
+            {#if thrownError != null}
                 <div>
                     <span class="error">Error: {thrownError.message}</span>
                 </div>

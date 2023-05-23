@@ -1,18 +1,16 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
     import { date, time } from '../../classes/Store';
-    import type WeatherData from '../../classes/WeatherData';
-    const weather: WeatherData = getContext('weather');
+    import { weather } from '../../classes/Store';
 </script>
 
 <header>
     <section>
-        <p>{date}</p>
-        <p>{time}</p>
+        <p>{$date}</p>
+        <p>{$time}</p>
     </section>
     <section>
-        <p>{weather.cityName}</p>
-        <p>{weather.countryName}</p>
+        <p>{$weather.cityName}</p>
+        <p>{$weather.countryName}</p>
     </section>
 </header>
 

@@ -39,6 +39,7 @@ export default async function fetchWeather(
             unitSystem
         );
     } catch (error) {
+        console.log(`FetchWeather Script Error: ${error.message}`);
         throw new Error(error.message);
     }
 }
