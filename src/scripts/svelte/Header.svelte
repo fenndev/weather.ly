@@ -6,7 +6,6 @@
     import type WeatherData from '../classes/WeatherData';
     let rateLimiter: RateLimiter;
     let location: string = '';
-    let selectedUnitSystem: string | null;
     let thrownError: any = null;
 
     onMount(() => {
@@ -16,9 +15,7 @@
 
     async function handleSubmit() {
         if (rateLimiter.isRateLimitReached()) return;
-        if (selectedUnitSystem)
-            await fetchWeatherInfo(location, selectedUnitSystem);
-        else await fetchWeatherInfo(location);
+        await fetchWeatherInfo(location, $weather.unitSystem);
     }
 
     async function fetchWeatherInfo(

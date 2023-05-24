@@ -135,6 +135,7 @@
     .selected {
         background-color: #007bff;
         color: white;
+        cursor: default;
     }
 
     @media only screen and (max-width: 1024px) {
