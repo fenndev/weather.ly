@@ -2,7 +2,6 @@
     import { date, time } from '../classes/Store';
     import { weather } from '../classes/Store';
     import cloud from '../../assets/cloud.svg';
-    import partcloud from '../../assets/partcloud.svg';
     import rain from '../../assets/rain.svg';
     import snow from '../../assets/snow.svg';
     import storm from '../../assets/storm.svg';
