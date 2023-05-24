@@ -25,6 +25,7 @@ export default async function fetchWeather(
             weatherID,
             windSpeed,
             humidity,
+            pressure,
             unitSystem,
         } = parsedResponse;
         return new WeatherData(
@@ -36,6 +37,7 @@ export default async function fetchWeather(
             weatherID,
             windSpeed,
             humidity,
+            pressure,
             unitSystem
         );
     } catch (error) {

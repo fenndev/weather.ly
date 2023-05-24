@@ -31,7 +31,7 @@
             <!-- Not Implemented Yet -->
             <div class="conditions__box">
                 <p>Pressure</p>
-                <p>30.15inHg</p>
+                <p>{$weather.pressure}hPa</p>
             </div>
         </div>
         <div class="conditions__buttons">
