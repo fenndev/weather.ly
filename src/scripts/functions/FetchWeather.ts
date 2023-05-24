@@ -7,9 +7,10 @@ export default async function fetchWeather(
 ): Promise<WeatherData> {
     try {
         const sanitizedQuery: string = sanitizeQuery(query);
+        console.log(`Sanitized Query: ${sanitizedQuery}`);
         if (!sanitizedQuery) throw new Error(`Query is undefined.`);
         const response = await fetch(
-            `https://weatherlee.cyclic.app/?q=${query}&units=${units}`
+            `https://weatherlee.cyclic.app/?q=${sanitizedQuery}&units=${units}`
         );
         if (response.status != 200) {
             const responseInfo: string = await response.text();
