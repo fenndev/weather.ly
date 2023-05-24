@@ -6,6 +6,10 @@
     import snow from '../../assets/snow.svg';
     import storm from '../../assets/storm.svg';
     import sun from '../../assets/sun.svg';
+
+    const convertUnits = (desiredUnits: string) => {
+        weather.convertUnits(desiredUnits);
+    };
 </script>
 
 <main>
@@ -55,8 +59,14 @@
         </div>
     </section>
     <footer class="conditions__buttons">
-        <button>Imperial</button>
-        <button>Metric</button>
+        <button
+            class:selected={$weather.unitSystem === 'imperial'}
+            on:click={() => convertUnits('imperial')}>Imperial</button
+        >
+        <button
+            class:selected={$weather.unitSystem === 'metric'}
+            on:click={() => convertUnits('metric')}>Metric</button
+        >
     </footer>
 </main>
 
@@ -112,7 +122,7 @@
         flex: 1 1 auto;
     }
 
-    .conditions__buttons button {
+    button {
         width: 10rem;
         height: 3rem;
         border: 1px solid black;
@@ -120,6 +130,11 @@
         background-color: white;
         border-radius: 15rem;
         cursor: pointer;
+    }
+
+    .selected {
+        background-color: #007bff;
+        color: white;
     }
 
     @media only screen and (max-width: 1024px) {
