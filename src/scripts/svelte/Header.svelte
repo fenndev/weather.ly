@@ -6,29 +6,28 @@
     import type WeatherData from '../classes/WeatherData';
     let rateLimiter: RateLimiter;
     let location: string = '';
-    let selectedUnitSystem: string = '';
+    let selectedUnitSystem: string | null;
     let thrownError: any = null;
 
     onMount(() => {
         rateLimiter = new RateLimiter();
         fetchWeatherInfo('seattle', 'imperial');
-        console.log(thrownError);
     });
-
-    $: {
-        if ($weather) $weather.convertUnits(selectedUnitSystem);
-    }
 
     async function handleSubmit() {
         if (rateLimiter.isRateLimitReached()) return;
-        await fetchWeatherInfo(location, selectedUnitSystem);
+        if (selectedUnitSystem)
+            await fetchWeatherInfo(location, selectedUnitSystem);
+        else await fetchWeatherInfo(location);
     }
 
-    async function fetchWeatherInfo(location: string, units: string) {
+    async function fetchWeatherInfo(
+        location: string,
+        units: string = 'imperial'
+    ) {
         try {
             weather.updateWeather(await fetchWeather(location, units));
         } catch (error: any) {
-            console.log(error.message);
             thrownError = error;
         }
     }
