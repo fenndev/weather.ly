@@ -10,6 +10,11 @@
     const convertUnits = (desiredUnits: string) => {
         weather.convertUnits(desiredUnits);
     };
+
+    const countryNames = new Intl.DisplayNames(['en'], { type: 'region' });
+
+    const getCountryName = (countryCode: string) =>
+        countryNames.of(countryCode);
 </script>
 
 <main>
@@ -19,8 +24,11 @@
             <p>{$time}</p>
         </section>
         <section class="info__location">
-            <p>{$weather.cityName}</p>
-            <p>{$weather.countryName}</p>
+            <p>
+                {$weather.cityName}{#if $weather.stateName}, {$weather.stateName}{/if}
+            </p>
+
+            <p>{getCountryName($weather.countryName)}</p>
         </section>
     </header>
     <section class="conditions">

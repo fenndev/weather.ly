@@ -15,6 +15,7 @@
 
     async function handleSubmit() {
         if (rateLimiter.isRateLimitReached()) return;
+        if (thrownError) thrownError = null;
         await fetchWeatherInfo(location, $weather.unitSystem);
     }
 
