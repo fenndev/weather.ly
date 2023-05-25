@@ -6,7 +6,7 @@
     import '../global.css';
 </script>
 
-<div style="min-height: 100svh;" class="grid grid-cols-12 grid-rows-5">
+<div style="min-height: 100svh;" class="grid grid-cols-12">
     <Header />
     {#if $weather}
         <Card />

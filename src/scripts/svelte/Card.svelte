@@ -14,7 +14,7 @@
 </script>
 
 <main
-    class="col-start-2 col-end-12 row-start-2 row-end-5 flex flex-col justify-between border border-black rounded-2xl p-8 shadow-md"
+    class="col-start-2 col-end-12 row-start-2 row-end-6 flex flex-col justify-between border border-black rounded-2xl p-8 shadow-md"
 >
     <header
         class="info flex flex-wrap flex-col sm:flex-row gap-4 sm:gap-0 justify-between text-xl text-center"

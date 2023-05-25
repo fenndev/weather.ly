@@ -39,7 +39,7 @@
     </h1>
     <form
         on:submit|preventDefault={handleSubmit}
-        class="flex flex-col w-full flex-1 gap-4 items-center"
+        class="flex flex-col w-full flex-auto gap-4 items-center"
     >
         <input
             bind:value={location}
