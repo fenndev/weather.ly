@@ -2,9 +2,9 @@
     export let weatherType: string;
     export let size: number = 64;
     if (weatherType == 'drizzle') weatherType = 'rain';
-    import '../../../../assets/icons.svg';
+    import '/icons.svg';
 </script>
 
 <svg width={size} height={size}>
-    <use href={`../../../../assets/icons.svg#icon-${weatherType}`} />
+    <use href={`/icons.svg#icon-${weatherType}`} />
 </svg>
