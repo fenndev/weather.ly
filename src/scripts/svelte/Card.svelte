@@ -16,12 +16,14 @@
 <main
     class="col-start-2 col-end-12 row-start-2 row-end-5 flex flex-col justify-between border border-black rounded-2xl p-8 shadow-md"
 >
-    <header class="info flex flex-wrap justify-between text-xl">
-        <section class="info__datetime text-start">
+    <header
+        class="info flex flex-wrap flex-col sm:flex-row gap-4 sm:gap-0 justify-between text-xl text-center"
+    >
+        <section class="info__datetime sm:text-start">
             <p>{$date}</p>
             <p>{$time}</p>
         </section>
-        <section class="info__location text-end">
+        <section class="info__location text-center sm:text-end">
             <p>
                 {$weather.cityName}{#if $weather.stateName}, {$weather.stateName}{/if}
             </p>

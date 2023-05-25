@@ -10,16 +10,16 @@ export default async function fetchWeather(
         console.log(`Sanitized Query: ${sanitizedQuery}`);
         if (!sanitizedQuery) throw new Error(`Query is undefined.`);
         const response = await fetch(
-            `https://weatherlee.cyclic.app/?q=${sanitizedQuery}&units=${units}`
-            // {
-            //     method: 'GET',
-            //     mode: 'cors',
-            //     cache: 'no-cache',
-            //     credentials: 'same-origin',
-            //     headers: {
-            //         'Content-Type': 'text/html',
-            //     },
-            // }
+            `https://weatherlee.cyclic.app/?q=${sanitizedQuery}&units=${units}`,
+            {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'text/html',
+                },
+            }
         );
         if (response.status != 200) {
             const responseInfo: string = await response.text();
