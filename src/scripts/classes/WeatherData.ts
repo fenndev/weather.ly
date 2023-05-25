@@ -28,7 +28,8 @@ export default class WeatherData {
         this.stateName = state;
         this.countryName = country;
         this.temperature = Number.parseFloat(temperature.toFixed(1));
-        this.weatherType = weatherType;
+        if (weatherType == 'Drizzle') this.weatherType = 'Rain';
+        else this.weatherType = weatherType;
         this.weatherID = weatherID;
         this.windSpeed = Number.parseFloat(windSpeed.toFixed(1));
         this.humidity = humidity;
