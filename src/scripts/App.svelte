@@ -6,21 +6,10 @@
     import '../global.css';
 </script>
 
-<div class="container">
+<div style="min-height: 100svh;" class="grid grid-cols-12 grid-rows-5">
     <Header />
     {#if $weather}
         <Card />
     {/if}
     <Footer />
 </div>
-
-<style>
-    .container {
-        height: 100svh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 2vh 20%;
-        gap: 10svh;
-    }
-</style>
