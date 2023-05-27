@@ -2,6 +2,86 @@
 @tailwind utilities;
 @tailwind components;
 
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Bold Italic'), local('NotoSans-BoldItalic'),
+        url('fonts/NotoSans-BoldItalic.woff2') format('woff2'),
+        url('fonts/NotoSans-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Italic'), local('NotoSans-Italic'),
+        url('fonts/NotoSans-Italic.woff2') format('woff2'),
+        url('fonts/NotoSans-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Bold'), local('NotoSans-Bold'),
+        url('fonts/NotoSans-Bold.woff2') format('woff2'),
+        url('fonts/NotoSans-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Light'), local('NotoSans-Light'),
+        url('fonts/NotoSans-Light.woff2') format('woff2'),
+        url('fonts/NotoSans-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Light Italic'), local('NotoSans-LightItalic'),
+        url('fonts/NotoSans-LightItalic.woff2') format('woff2'),
+        url('fonts/NotoSans-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans Regular'), local('NotoSans-Regular'),
+        url('fonts/NotoSans-Regular.woff2') format('woff2'),
+        url('fonts/NotoSans-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans SemiBold Italic'), local('NotoSans-SemiBoldItalic'),
+        url('fonts/NotoSans-SemiBoldItalic.woff2') format('woff2'),
+        url('fonts/NotoSans-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: local('Noto Sans SemiBold'), local('NotoSans-SemiBold'),
+        url('fonts/NotoSans-SemiBold.woff2') format('woff2'),
+        url('fonts/NotoSans-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
 *,
 *::before,
 *::after {
