@@ -1,7 +1,7 @@
 {
     "name": "weather.ly",
-    "version": "0.0.1",
-    "description": "A weather application written in HTML, CSS, and Javascript.",
+    "version": "1.0.0",
+    "description": "A responsive web application built with Svelte, TypeScript, and TailwindCSS",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -16,7 +16,7 @@
         "url": "git+https://github.com/fenndev/weather.ly.git"
     },
     "author": "fenndev",
-    "license": "ISC",
+    "license": "GPL-3.0-or-later",
     "bugs": {
         "url": "https://github.com/fenndev/weather.ly/issues"
     },
